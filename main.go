@@ -128,7 +128,7 @@ func NewSession() (*Session, error) {
 	var dir string
 	if *devFlag {
 		dir = filepath.Join(os.TempDir(), "gphotos-cdp")
-		if err := os.MkdirAll(dir, 0700); err != nil {
+		if err := os.MkdirAll(dir, 0777); err != nil {
 			return nil, err
 		}
 	} else {
@@ -142,7 +142,7 @@ func NewSession() (*Session, error) {
 	if dlDir == "" {
 		dlDir = filepath.Join(os.Getenv("HOME"), "Downloads", "gphotos-cdp")
 	}
-	if err := os.MkdirAll(dlDir, 0700); err != nil {
+	if err := os.MkdirAll(dlDir, 0777); err != nil {
 		return nil, err
 	}
 	lastDone, err := getLastDone(dlDir)
@@ -581,7 +581,7 @@ func (s *Session) moveDownload(ctx context.Context, dlFile, location string) (st
 		return "", fmt.Errorf("not enough slash separated parts in location %v: %d", location, len(parts))
 	}
 	newDir := filepath.Join(s.dlDir, parts[4])
-	if err := os.MkdirAll(newDir, 0700); err != nil {
+	if err := os.MkdirAll(newDir, 0777); err != nil {
 		return "", err
 	}
 	newFile := filepath.Join(newDir, dlFile)
